@@ -1,0 +1,28 @@
+# requirements.txt
+
+# Jupyter Notebook 및 기본 라이브러리
+jupyter
+ipykernel
+
+# 데이터 처리 & 머신러닝 기본 툴
+numpy
+pandas
+scikit-learn
+
+# PyTorch: Apple Silicon(M1, M2, etc.) 환경에서 MPS로 가속하기 위해
+torch>=2.0
+
+# Transformers: Hugging Face의 모델과 토크나이저
+transformers>=4.26
+sentencepiece
+
+# 모델 학습 및 가속화
+accelerate
+
+# LangChain, Vector DB 등
+langchain
+chromadb
+faiss-cpu  # CPU 버전 FAISS, Apple Silicon은 GPU 지원을 직접 빌드해야 할 수도 있음.
+
+# 기타
+huggingface_hub
