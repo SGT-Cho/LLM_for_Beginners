@@ -162,74 +162,74 @@ On Apple Silicon (M1, M4, etc.), mps (Metal Performance Shaders) device support 
 Tokens and Tokenizer
 
 In Natural Language Processing (NLP), tokenization is a very important preprocessing step that breaks text into specific units. The tool or library used in this process is the tokenizer. Let’s learn about this in more detail.
-	1.	What is a Token?
+1.	What is a Token?
 
-A token is a small semantic unit obtained by splitting text (sentences, paragraphs, etc.). The way you split can vary, producing different types of token units.
+	A token is a small semantic unit obtained by splitting text (sentences, paragraphs, etc.). The way you split can vary, producing different types of token units.
+	
+	1.1 Word-level
+		•A simple method that splits based on whitespace or punctuation.
+		•Example: “나는 학교에 간다.” → [“나는”, “학교에”, “간다.”]
+	
+	1.2 Morpheme-level (used in Korean)
+		•Often used for Korean.
+		•Example: “나는 학교에 간다.” → [“나”, “는”, “학교”, “에”, “가”, “ᄂ다”, “.”]
+	
+	1.3 Subword-level
+		•Uses algorithms like BPE, WordPiece, SentencePiece to split into smaller-than-word units.
+		•Example: “unhappy” → [“un”, “happy”]
+		•Example: “unbelievable” → [“un”, “believable”]
 
-1.1 Word-level
-	•	A simple method that splits based on whitespace or punctuation.
-	•	Example: “나는 학교에 간다.” → [“나는”, “학교에”, “간다.”]
+2.	What is a Tokenizer?
 
-1.2 Morpheme-level (used in Korean)
-	•	Often used for Korean.
-	•	Example: “나는 학교에 간다.” → [“나”, “는”, “학교”, “에”, “가”, “ᄂ다”, “.”]
+	A tokenizer is a tool (or library) that splits text into tokens according to certain rules or algorithms.
+	
+	2.1 Rule-based Tokenizer
+		•Splits using predefined rules such as whitespace, punctuation, or patterns (regex).
+		•Example: split(), simple regex-based splitting.
+	
+	2.2 Trained Tokenizer
+		•Automatically creates a token vocabulary by training on a corpus of data, learning the rules.
+		•BPE (Byte-Pair Encoding), WordPiece, SentencePiece are representative examples.
+		•Also used in large language models (e.g., BERT, GPT).
 
-1.3 Subword-level
-	•	Uses algorithms like BPE, WordPiece, SentencePiece to split into smaller-than-word units.
-	•	Example: “unhappy” → [“un”, “happy”]
-	•	Example: “unbelievable” → [“un”, “believable”]
+3.	Why is Tokenization Important?
+4.	Improved Accuracy
+	•Splitting text into correct units increases the accuracy of subsequent tasks like morphological analysis or POS tagging.
+5.	Vocabulary Management
+	•If you only split by words, your vocabulary can become huge, but with subword methods, you can handle rare words and neologisms efficiently.
+6.	Maximize Model Performance
+	•Poor tokenization can make it difficult to train the model or degrade performance at inference time.
+	•Models like BERT or GPT are trained on consistent tokenization rules.
+7.	Considerations for Korean Tokenization
+8.	The need for morphological analysis
+	•Korean has various postpositions and endings, making it difficult to tokenize by whitespace alone.
+9.	Various elements within a word
+	•“학교에” → [“학교”, “에”]
+	•“학교에서” → [“학교”, “에서”]
+	•Must split postpositions, endings, etc. to get the desired accuracy.
+10.	Irregular spacing
+	•Because spacing is often not strictly followed, purely rule-based approaches have limitations.
+11.	Representative Tokenizers
 
-	2.	What is a Tokenizer?
+	•NLTK (English)
+	•One of the most widely used NLP libraries in Python
+	•Provides word tokenization, sentence tokenization, stopword removal, etc.
+	•KoNLPy (Korean)
+	•Integrates multiple morphological analyzers (Twitter, Kkma, Hannanum, etc.)
+	•Specialized for Korean, offering morphological analysis, POS tagging, etc.
+	•BPE, SentencePiece, WordPiece
+	•Subword-based tokenizers
+	•Used in large language models such as BERT, GPT, RoBERTa, etc.
 
-A tokenizer is a tool (or library) that splits text into tokens according to certain rules or algorithms.
+6.	Summary
 
-2.1 Rule-based Tokenizer
-	•	Splits using predefined rules such as whitespace, punctuation, or patterns (regex).
-	•	Example: split(), simple regex-based splitting.
-
-2.2 Trained Tokenizer
-	•	Automatically creates a token vocabulary by training on a corpus of data, learning the rules.
-	•	BPE (Byte-Pair Encoding), WordPiece, SentencePiece are representative examples.
-	•	Also used in large language models (e.g., BERT, GPT).
-
-	3.	Why is Tokenization Important?
-	4.	Improved Accuracy
-	•	Splitting text into correct units increases the accuracy of subsequent tasks like morphological analysis or POS tagging.
-	5.	Vocabulary Management
-	•	If you only split by words, your vocabulary can become huge, but with subword methods, you can handle rare words and neologisms efficiently.
-	6.	Maximize Model Performance
-	•	Poor tokenization can make it difficult to train the model or degrade performance at inference time.
-	•	Models like BERT or GPT are trained on consistent tokenization rules.
-	7.	Considerations for Korean Tokenization
-	8.	The need for morphological analysis
-	•	Korean has various postpositions and endings, making it difficult to tokenize by whitespace alone.
-	9.	Various elements within a word
-	•	“학교에” → [“학교”, “에”]
-	•	“학교에서” → [“학교”, “에서”]
-	•	Must split postpositions, endings, etc. to get the desired accuracy.
-	10.	Irregular spacing
-	•	Because spacing is often not strictly followed, purely rule-based approaches have limitations.
-	11.	Representative Tokenizers
-
-	•	NLTK (English)
-	•	One of the most widely used NLP libraries in Python
-	•	Provides word tokenization, sentence tokenization, stopword removal, etc.
-	•	KoNLPy (Korean)
-	•	Integrates multiple morphological analyzers (Twitter, Kkma, Hannanum, etc.)
-	•	Specialized for Korean, offering morphological analysis, POS tagging, etc.
-	•	BPE, SentencePiece, WordPiece
-	•	Subword-based tokenizers
-	•	Used in large language models such as BERT, GPT, RoBERTa, etc.
-
-	6.	Summary
-
-	•	Token
-	•	The result of splitting text into small units (words, morphemes, subwords, etc.)
-	•	Tokenizer
-	•	A tool or algorithm for splitting text according to a specified criterion
-	•	Tokenization
-	•	A core preprocessing step in NLP. Good tokenization can significantly improve model performance and manage vocabulary effectively.
-	•	For Korean, morphological analysis or subword-based methods are commonly used.
+	•Token
+	•The result of splitting text into small units (words, morphemes, subwords, etc.)
+	•Tokenizer
+	•A tool or algorithm for splitting text according to a specified criterion
+	•Tokenization
+	•A core preprocessing step in NLP. Good tokenization can significantly improve model performance and manage vocabulary effectively.
+	•For Korean, morphological analysis or subword-based methods are commonly used.
 
 In conclusion, proper tokenization can greatly improve data quality and model performance. It is important to choose a tokenizer suited to your NLP project and devise a tokenization strategy that reflects the linguistic characteristics of each language.
 
@@ -262,9 +262,9 @@ Generated text:
 Hello, how are you? Today we are going to talk about the new generation...
 
 Explanation:
-	•	torch_dtype=torch.float16: float16 is optimal on Apple MPS.
-	•	device_map={"": device}: Automatically places the model on MPS (GPU) or CPU.
-	•	max_new_tokens=50: Limits response to 50 tokens.
+	•torch_dtype=torch.float16: float16 is optimal on Apple MPS.
+	•device_map={"": device}: Automatically places the model on MPS (GPU) or CPU.
+	•max_new_tokens=50: Limits response to 50 tokens.
 
 Llama 3.1 8B + LangChain + Vector DB (RAG)
 
@@ -357,16 +357,16 @@ Meanwhile, “cat” and “car” have little connection, so they lie far apart
 Embedding Models are used to vectorize text, images, audio, etc. Here are some representative types:
 
 (1) Text Embeddings (Word/Sentence Embeddings)
-	•	Models that convert words, sentences, or documents into vectors for NLP
-	•	Uses: Chatbots, search, recommendation systems, document classification, RAG
+	•Models that convert words, sentences, or documents into vectors for NLP
+	•Uses: Chatbots, search, recommendation systems, document classification, RAG
 
 Representative Models:
-	•	Word2Vec: A leading model for word vectorization
-	•	GloVe: Vectors that reflect statistical co-occurrence of words
-	•	FastText: An improvement on Word2Vec (can embed subwords)
-	•	BERT Embedding: A powerful model that considers context when creating vectors
-	•	Sentence-BERT (SBERT): A model that creates embeddings at the sentence level
-	•	sentence-transformers/all-MiniLM-L6-v2: A lightweight, fast sentence embedding model (often used with LangChain, RAG)
+	•Word2Vec: A leading model for word vectorization
+	•GloVe: Vectors that reflect statistical co-occurrence of words
+	•FastText: An improvement on Word2Vec (can embed subwords)
+	•BERT Embedding: A powerful model that considers context when creating vectors
+	•Sentence-BERT (SBERT): A model that creates embeddings at the sentence level
+	•sentence-transformers/all-MiniLM-L6-v2: A lightweight, fast sentence embedding model (often used with LangChain, RAG)
 
 Example (using sentence-transformers to generate text embedding vectors):
 
@@ -389,13 +389,13 @@ print(embeddings[0])
 ⸻
 
 (2) Image Embeddings
-	•	Convert image data into vectors for tasks like image similarity search, object recognition, etc.
-	•	Uses: Image retrieval systems, style recommendations, computer vision
+	•Convert image data into vectors for tasks like image similarity search, object recognition, etc.
+	•Uses: Image retrieval systems, style recommendations, computer vision
 
 Representative Models:
-	•	ResNet-50, EfficientNet, CLIP: For image classification and feature extraction
-	•	DINOv2: An image embedding model recently introduced by Meta
-	•	OpenAI CLIP: Maps text and images into the same vector space (e.g. “dog photo” → close to dog-image vectors)
+	•ResNet-50, EfficientNet, CLIP: For image classification and feature extraction
+	•DINOv2: An image embedding model recently introduced by Meta
+	•OpenAI CLIP: Maps text and images into the same vector space (e.g. “dog photo” → close to dog-image vectors)
 
 Example (using CLIP to generate image embedding vectors):
 
@@ -421,13 +421,13 @@ print(image_features.shape)  # e.g., [1, 512]
 ⸻
 
 (3) Audio Embeddings
-	•	Convert audio data into vectors for tasks like speech recognition, emotion analysis, etc.
-	•	Uses: Speech-to-text, emotion analysis, noise filtering, music recommendation systems
+	•Convert audio data into vectors for tasks like speech recognition, emotion analysis, etc.
+	•Uses: Speech-to-text, emotion analysis, noise filtering, music recommendation systems
 
 Representative Models:
-	•	MFCC (Mel-Frequency Cepstral Coefficients): A method to extract feature vectors from audio signals
-	•	wav2vec 2.0 (by Facebook): Converts audio to vectors and can transcribe text
-	•	Whisper (by OpenAI): A multi-language speech recognition and embedding model
+	•MFCC (Mel-Frequency Cepstral Coefficients): A method to extract feature vectors from audio signals
+	•wav2vec 2.0 (by Facebook): Converts audio to vectors and can transcribe text
+	•Whisper (by OpenAI): A multi-language speech recognition and embedding model
 
 Example (using librosa to generate audio embedding vectors):
 
@@ -449,18 +449,18 @@ print(mfccs[:, 0])
 4) Applications of Embedding Vectors
 
 Using embedding models, you can achieve strong performance in tasks such as document search, chatbots, recommendation systems, and RAG models.
-	•	Document Retrieval System
-	•	Convert user queries into vectors and search for the most similar documents.
-	•	Example: LangChain + ChromaDB for RAG (Retrieval-Augmented Generation)
-	•	Chatbots and LLM Applications
-	•	During chatbot response generation, utilize embedding-based searches.
-	•	Example: Convert user input into embeddings and retrieve the most relevant answers from a DB.
-	•	Recommendation Systems
-	•	Platforms like Netflix or Spotify use embedding vectors for user preference and content.
-	•	Example: Embedding vectors for movies/music the user has consumed, then recommend similar content.
-	•	Healthcare and Bioinformatics
-	•	Vectorize gene data, medical publications, protein structures, etc. for analysis.
-	•	Example: Drug discovery, genome analysis
+	•Document Retrieval System
+	•Convert user queries into vectors and search for the most similar documents.
+	•Example: LangChain + ChromaDB for RAG (Retrieval-Augmented Generation)
+	•Chatbots and LLM Applications
+	•During chatbot response generation, utilize embedding-based searches.
+	•Example: Convert user input into embeddings and retrieve the most relevant answers from a DB.
+	•Recommendation Systems
+	•Platforms like Netflix or Spotify use embedding vectors for user preference and content.
+	•Example: Embedding vectors for movies/music the user has consumed, then recommend similar content.
+	•Healthcare and Bioinformatics
+	•Vectorize gene data, medical publications, protein structures, etc. for analysis.
+	•Example: Drug discovery, genome analysis
 
 ⸻
 
@@ -570,21 +570,21 @@ Using device: mps
 Finetuning Complete!
 
 Why LoRA?
-	•	Typical training for Llama 3.1 8B might require over 100GB of RAM.
-	•	By adjusting only certain weights (Q, V projections) using LoRA, you can reduce memory usage.
-	•	Can run even on an M4 Pro with 64GB RAM.
+	•Typical training for Llama 3.1 8B might require over 100GB of RAM.
+	•By adjusting only certain weights (Q, V projections) using LoRA, you can reduce memory usage.
+	•Can run even on an M4 Pro with 64GB RAM.
 
 4) Summary
-	•	Llama 3.1 8B model usage
-	1.	Use Hugging Face Transformers
-	•	Use mps (Apple Metal)
-	•	Use float16 for memory optimization
-	•	Integrate with LangChain + Vector DB (RAG)
-	2.	Use ChromaDB to store documents
-	•	Build retrieval-answer systems with LangChain
-	•	Finetune Llama 3.1 8B (LoRA)
-	3.	Apply PEFT (LoRA) for lightweight training
-	•	Possible on Apple Silicon
+	•Llama 3.1 8B model usage
+	1.Use Hugging Face Transformers
+		•Use mps (Apple Metal)
+		•Use float16 for memory optimization
+		•Integrate with LangChain + Vector DB (RAG)
+	2.Use ChromaDB to store documents
+		•Build retrieval-answer systems with LangChain
+		•Finetune Llama 3.1 8B (LoRA)
+	3.Apply PEFT (LoRA) for lightweight training
+		•Possible on Apple Silicon
 
 How to Use the Trained Model
 
