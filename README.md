@@ -1,140 +1,155 @@
-⸻
+# LLM, Llama, Deepseek R1, LangChain, RAG, Vector DB, LLM Finetuning
 
-LLM, Llama, Deepseek R1, LangChain, RAG, Vector DB, LLM Finetuning
+This notebook has been created to **demonstrate how to experiment with a Local Large Language Model (LLM) in a local environment**.
 
-This notebook has been created to demonstrate how to experiment with a Local Large Language Model (LLM) in a local environment.
+---
 
-⸻
+## 1. LLM (Large Language Model)
 
-1. LLM (Large Language Model)
+An **LLM** is a language model with an extremely large number of parameters, showing **high performance** in various areas of **Natural Language Processing (NLP)**.  
+- Examples: **GPT-4**, **Llama3**, **Phi4**, **Deepseek R1**, etc.
 
-An LLM is a language model with an extremely large number of parameters, showing high performance in various areas of Natural Language Processing (NLP).
-	•	Examples: GPT-4, Llama3, Phi4, Deepseek R1, etc.
+---
 
-⸻
+## 2.1 Llama
 
-2.1 Llama
+**Llama** is a **large language model** family released by Meta.  
+- Pretrained **Llama models** can be run **locally** via Hugging Face Transformers.
 
-Llama is a large language model family released by Meta.
-	•	Pretrained Llama models can be run locally via Hugging Face Transformers.
+## 2.2 Deepseek R1
 
-2.2 Deepseek R1
+**Deepseek R1** is an inference model based on reinforcement learning (RL).  
+- DeepSeek is a Chinese AI company established in 2023 by the High-Flyer hedge fund. They have released various open-source large language models such as DeepSeek LLM, DeepSeek Coder, DeepSeek Math, and so on.  
+  In particular, the recently released DeepSeek-V3 has gained attention for performance on par with Claude 3.5 Sonnet or Gemini 1.5 Pro.
 
-Deepseek R1 is an inference model based on reinforcement learning (RL).
-	•	DeepSeek is a Chinese AI company established in 2023 by the High-Flyer hedge fund. They have released various open-source large language models such as DeepSeek LLM, DeepSeek Coder, DeepSeek Math, and so on.
-In particular, the recently released DeepSeek-V3 has gained attention for performance on par with Claude 3.5 Sonnet or Gemini 1.5 Pro.
-	•	Recently, they open-sourced DeepSeek-R1 and DeepSeek-R1-Zero, which maximize inference abilities through reinforcement learning (RL). These two models were open-sourced on January 20, 2025.
+- Recently, they open-sourced **DeepSeek-R1** and **DeepSeek-R1-Zero**, which maximize inference abilities through **reinforcement learning (RL)**. These two models were open-sourced on January 20, 2025.
 
-⸻
+---
 
-3. LangChain
+## 3. LangChain
 
-LangChain is a Python-based library that provides a variety of features to systematically develop and scale applications that utilize large language models (LLMs).
-	•	Prompt Management
-	•	Organizes and systematizes multiple prompts for efficient reuse and management.
-	•	Chaining
-	•	Allows you to sequentially connect multiple steps of LLM tasks in a pipeline format.
-	•	Example: Summarization → Q&A → Sentiment Analysis, etc. You can easily implement multi-step workflows.
-	•	Agents
-	•	Modules that can dynamically perform tasks by accessing specific tools (API, DB, etc.) and make reasoning-based decisions to solve problems.
-	•	Memory
-	•	A feature that manages previous conversations or context so that the model can “remember” them.
-	•	Tool Integration
-	•	Integrates easily with a wide range of external tools (databases, third-party APIs, web search, etc.) to provide rich functionality.
+**LangChain** is a Python-based library that provides a variety of features to **systematically develop** and **scale** applications that utilize **large language models (LLMs)**.
 
-Because all of these capabilities can be combined, it is easy to rapidly prototype LLM-based applications and expand them into production environments.
+- **Prompt Management**  
+  - Organizes and **systematizes** multiple prompts for efficient reuse and management.
 
-⸻
+- **Chaining**  
+  - Allows you to **sequentially connect** multiple steps of LLM tasks in a **pipeline** format.  
+  - Example: Summarization → Q&A → Sentiment Analysis, etc. You can easily implement multi-step workflows.
 
-4. RAG (Retrieval-Augmented Generation)
+- **Agents**  
+  - Modules that can **dynamically perform tasks** by accessing specific tools (API, DB, etc.) and make **reasoning-based** decisions to **solve problems**.
 
-RAG (Retrieval-Augmented Generation) is a method in which a large language model does not rely solely on its internally learned parameters but also queries external knowledge bases (documents, databases, web search results, etc.) in real time to retrieve and use necessary information.
-	1.	Retrieve
-	•	Uses a search engine such as a Vector DB to find relevant documents or information corresponding to the user query (or conversation context).
-	•	Through similarity search based on embedding vectors, the model quickly obtains the information it needs.
-	2.	Generate
-	•	The LLM generates the answer using the retrieved documents.
-	•	Leveraging specific details from the documents, the model returns factually rich and highly accurate text.
+- **Memory**  
+  - A feature that manages **previous conversations or context** so that the model can “remember” them.
 
-Advantages
-	•	Improved Accuracy: Can utilize the latest data or knowledge not contained in the model’s training.
-	•	Overcoming Memory Limits: You do not have to store all knowledge within model parameters, allowing you to maintain an efficient model size.
-	•	Flexibility: Can combine various data types (text, image captions, DB content, etc.).
+- **Tool Integration**  
+  - Integrates easily with a wide range of external tools (databases, third-party APIs, web search, etc.) to provide **rich functionality**.
 
-⸻
+Because all of these capabilities can be **combined**, it is easy to **rapidly prototype** LLM-based applications and expand them into **production environments**.
 
-5. Vector DB
+---
 
-A Vector DB is a specialized database for storing embedding vectors (from text, images, etc.) and performing fast searches for vectors (documents, images) that have high similarity.
-	•	Key Features
-	1.	Vector Insertion
-	•	Converts text/images to vectors using a pretrained model (e.g., SentenceTransformer, BERT, etc.) and stores them.
-	2.	Similarity Search (ANN Search)
-	•	Utilizes Approximate Nearest Neighbor Search techniques to efficiently find the most similar vectors (documents) among a large vector set.
-	3.	Scalability
-	•	Maintains fast search speed even for very large datasets through scaling and distributed processing.
-	•	Representative Vector DB examples
-	•	FAISS: A vector similarity search library developed by Meta (formerly Facebook).
-	•	Chroma: A vector DB that can easily scale from personal projects to enterprise services.
-	•	Milvus: A high-performance, large-scale vector search engine.
-	•	Pinecone: A fully managed cloud-based vector DB service.
+## 4. RAG (Retrieval-Augmented Generation)
 
-Use Cases
-	•	RAG (Retrieval-Augmented Generation) for document search
-	•	Similarity-based recommendation systems
-	•	Multi-modal search for images, audio, etc.
+**RAG (Retrieval-Augmented Generation)** is a method in which a large language model does not rely solely on its **internally learned parameters** but also queries **external knowledge bases** (documents, databases, web search results, etc.) in **real time** to retrieve and use necessary information.
 
-⸻
+1. **Retrieve**  
+   - Uses a search engine such as a **Vector DB** to find **relevant documents or information** corresponding to the user query (or conversation context).  
+   - Through similarity search based on **embedding vectors**, the model **quickly obtains** the information it needs.
 
-6. LLM Finetuning
+2. **Generate**  
+   - The **LLM** **generates** the answer using the retrieved documents.  
+   - Leveraging **specific details** from the documents, the model returns **factually rich** and **highly accurate** text.
 
-LLM Finetuning is the process of additional training a pretrained large language model (e.g., GPT, BERT, etc.) to customize it for a specific task or domain.
-	•	You can significantly improve the model’s performance on specific data while reusing existing parameters.
+**Advantages**  
+- **Improved Accuracy**: Can utilize the latest data or knowledge not contained in the model’s training.  
+- **Overcoming Memory Limits**: You do not have to store all knowledge within model parameters, allowing you to **maintain an efficient model size**.  
+- **Flexibility**: Can combine various data types (text, image captions, DB content, etc.).
 
-6.1 Finetuning Methods
-	1.	Full Finetuning
-	•	Updating all model parameters, usually through epoch-based optimization.
-	•	Used when you have plenty of data and computational resources.
-	2.	PEFT (LoRA, Prefix Tuning, etc.)
-	•	Approaches that update only part of the parameters or that enable low-cost additional training.
-	•	LoRA (Low-Rank Adaptation): Trains certain weight matrices in the model in a low-rank form to achieve finetuning effects with less memory usage.
-	•	Prefix Tuning: Adds a virtual prompt (prefix) before the input tokens, guiding model performance improvement without major changes to the main model.
-	3.	Training Tools
-	•	Hugging Face Transformers library’s Trainer API
-	•	Deepspeed, Accelerate for distributed training and memory optimization
-	•	PEFT library: Apply LoRA and various other techniques easily
+---
 
-6.2 Considerations
-	•	Data Quality: The domain suitability and label quality of the finetuning data are very important.
-	•	Avoid Overfitting: Simply increasing the learning rate or the number of epochs may cause the model’s generative ability to degrade or lead to model bias.
-	•	Model Compatibility: Some models have architectural constraints that limit finetuning, so you should consult official documentation or community resources.
+## 5. Vector DB
 
-⸻
+A **Vector DB** is a **specialized database** for storing **embedding vectors** (from text, images, etc.) and performing **fast searches** for vectors (documents, images) that have **high similarity**.
 
-By combining LangChain, RAG, Vector DB, and LLM Finetuning, you can:
-	1.	Easily build an LLM-based pipeline,
-	2.	Strengthen the model’s responses with accurate and rich knowledge, and
-	3.	Create a custom LLM optimized for a specific domain or work environment.
+- **Key Features**  
+  1. **Vector Insertion**  
+     - Converts text/images to vectors using a pretrained model (e.g., SentenceTransformer, BERT, etc.) and stores them.  
+  2. **Similarity Search (ANN Search)**  
+     - Utilizes Approximate Nearest Neighbor Search techniques to **efficiently** find the **most similar vectors (documents)** among a large vector set.  
+  3. **Scalability**  
+     - Maintains **fast search speed** even for very large datasets through **scaling** and distributed processing.
 
-In practical or research settings where LLMs are utilized:
-	•	Use LangChain to structure your workflow,
-	•	Enhance it with RAG for real-time knowledge retrieval,
-	•	Maximize search performance with a Vector DB,
-	•	And LLM Finetuning to adapt the model to domain-specific needs.
+- **Representative Vector DB examples**  
+  - **FAISS**: A vector similarity search library developed by Meta (formerly Facebook).  
+  - **Chroma**: A vector DB that can easily scale from personal projects to enterprise services.  
+  - **Milvus**: A high-performance, large-scale vector search engine.  
+  - **Pinecone**: A fully managed cloud-based vector DB service.
 
-This will enable you to build more efficient and powerful NLP solutions.
+**Use Cases**  
+- **RAG** (Retrieval-Augmented Generation) for **document search**  
+- **Similarity-based recommendation** systems  
+- **Multi-modal** search for images, audio, etc.
 
-⸻
+---
 
-Notebook Demonstration
+## 6. LLM Finetuning
 
-In this notebook, we will explore the following simple example code to see how to use a local environment:
-	1.	Load a local Llama model (or similar) and perform simple inference
-	2.	Use LangChain + Vector DB to demonstrate RAG
-	3.	(Simple version) LLM Finetuning example
+**LLM Finetuning** is the process of **additional training** a pretrained large language model (e.g., GPT, BERT, etc.) to **customize** it for a specific task or domain.  
+- You can **significantly improve** the model’s performance on **specific data** while reusing existing parameters.
 
+### 6.1 Finetuning Methods
+
+1. **Full Finetuning**  
+   - Updating **all** model parameters, usually through **epoch-based** optimization.  
+   - Used when you have plenty of data and computational resources.
+
+2. **PEFT (LoRA, Prefix Tuning, etc.)**  
+   - Approaches that **update only part of the parameters** or that enable **low-cost** additional training.  
+   - **LoRA (Low-Rank Adaptation)**: Trains certain weight matrices in the model in a **low-rank** form to achieve finetuning effects with **less memory usage**.  
+   - **Prefix Tuning**: Adds a **virtual prompt (prefix)** before the input tokens, guiding model performance improvement **without major changes** to the main model.
+
+3. **Training Tools**  
+   - **Hugging Face Transformers** library’s **Trainer API**  
+   - **Deepspeed**, **Accelerate** for **distributed training** and memory optimization  
+   - **PEFT library**: Apply LoRA and various other techniques easily
+
+### 6.2 Considerations
+
+- **Data Quality**: The **domain suitability** and **label quality** of the finetuning data are very important.  
+- **Avoid Overfitting**: Simply increasing the learning rate or the number of epochs may cause the **model’s generative ability to degrade** or lead to **model bias**.  
+- **Model Compatibility**: Some models have architectural constraints that limit finetuning, so you should consult **official documentation** or **community resources**.
+
+---
+
+By combining **LangChain**, **RAG**, **Vector DB**, and **LLM Finetuning**, you can:
+
+1. Easily build an **LLM-based pipeline**,  
+2. Strengthen the model’s responses with **accurate and rich knowledge**, and  
+3. Create a **custom LLM** optimized for a **specific domain** or **work environment**.
+
+In practical or research settings where LLMs are utilized:  
+- Use **LangChain** to structure your **workflow**,  
+- Enhance it with **RAG** for **real-time knowledge retrieval**,  
+- Maximize **search performance** with a **Vector DB**,  
+- And **LLM Finetuning** to adapt the model to **domain-specific** needs.  
+
+This will enable you to build more **efficient** and **powerful** NLP solutions.
+
+---
+
+## Notebook Demonstration
+
+In this notebook, we will explore the following **simple example code** to see how to use a local environment:
+
+1. **Load a local Llama model (or similar) and perform simple inference**  
+2. **Use LangChain + Vector DB to demonstrate RAG**  
+3. (Simple version) **LLM Finetuning example**
+
+```bash
 pip install -r requirements.txt
-
+```
 Run this in your terminal to set up the environment.
 
 Example: Loading a local LLM
@@ -609,7 +624,7 @@ https://huggingface.co/datasets/SGTCho/korean_food
 And follow the steps here:
 https://github.com/SGT-Cho/LLM/tree/main/Finetuning
 
-⸻
+
 
 
 # LLM, Llama, Deepseek R1, LangChain, RAG, Vector DB, LLM Finetuning
