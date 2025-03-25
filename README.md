@@ -505,8 +505,6 @@ print(mfccs[:, 0])
 
 ---
 
-📌 **추가 질문이 있으면 편하게 물어봐 주세요!** 😊
-
 ### 3)Llama 3.1 8B 모델 Finetuning (LoRA 적용)
 Llama 3.1 8B 모델을 LoRA (Low-Rank Adaptation) 방식으로 파인튜닝하려면 PEFT (Parameter-Efficient Fine-Tuning) 를 사용하면 됩니다.
 
