@@ -1,3 +1,617 @@
+⸻
+
+LLM, Llama, Deepseek R1, LangChain, RAG, Vector DB, LLM Finetuning
+
+This notebook has been created to demonstrate how to experiment with a Local Large Language Model (LLM) in a local environment.
+
+⸻
+
+1. LLM (Large Language Model)
+
+An LLM is a language model with an extremely large number of parameters, showing high performance in various areas of Natural Language Processing (NLP).
+	•	Examples: GPT-4, Llama3, Phi4, Deepseek R1, etc.
+
+⸻
+
+2.1 Llama
+
+Llama is a large language model family released by Meta.
+	•	Pretrained Llama models can be run locally via Hugging Face Transformers.
+
+2.2 Deepseek R1
+
+Deepseek R1 is an inference model based on reinforcement learning (RL).
+	•	DeepSeek is a Chinese AI company established in 2023 by the High-Flyer hedge fund. They have released various open-source large language models such as DeepSeek LLM, DeepSeek Coder, DeepSeek Math, and so on.
+In particular, the recently released DeepSeek-V3 has gained attention for performance on par with Claude 3.5 Sonnet or Gemini 1.5 Pro.
+	•	Recently, they open-sourced DeepSeek-R1 and DeepSeek-R1-Zero, which maximize inference abilities through reinforcement learning (RL). These two models were open-sourced on January 20, 2025.
+
+⸻
+
+3. LangChain
+
+LangChain is a Python-based library that provides a variety of features to systematically develop and scale applications that utilize large language models (LLMs).
+	•	Prompt Management
+	•	Organizes and systematizes multiple prompts for efficient reuse and management.
+	•	Chaining
+	•	Allows you to sequentially connect multiple steps of LLM tasks in a pipeline format.
+	•	Example: Summarization → Q&A → Sentiment Analysis, etc. You can easily implement multi-step workflows.
+	•	Agents
+	•	Modules that can dynamically perform tasks by accessing specific tools (API, DB, etc.) and make reasoning-based decisions to solve problems.
+	•	Memory
+	•	A feature that manages previous conversations or context so that the model can “remember” them.
+	•	Tool Integration
+	•	Integrates easily with a wide range of external tools (databases, third-party APIs, web search, etc.) to provide rich functionality.
+
+Because all of these capabilities can be combined, it is easy to rapidly prototype LLM-based applications and expand them into production environments.
+
+⸻
+
+4. RAG (Retrieval-Augmented Generation)
+
+RAG (Retrieval-Augmented Generation) is a method in which a large language model does not rely solely on its internally learned parameters but also queries external knowledge bases (documents, databases, web search results, etc.) in real time to retrieve and use necessary information.
+	1.	Retrieve
+	•	Uses a search engine such as a Vector DB to find relevant documents or information corresponding to the user query (or conversation context).
+	•	Through similarity search based on embedding vectors, the model quickly obtains the information it needs.
+	2.	Generate
+	•	The LLM generates the answer using the retrieved documents.
+	•	Leveraging specific details from the documents, the model returns factually rich and highly accurate text.
+
+Advantages
+	•	Improved Accuracy: Can utilize the latest data or knowledge not contained in the model’s training.
+	•	Overcoming Memory Limits: You do not have to store all knowledge within model parameters, allowing you to maintain an efficient model size.
+	•	Flexibility: Can combine various data types (text, image captions, DB content, etc.).
+
+⸻
+
+5. Vector DB
+
+A Vector DB is a specialized database for storing embedding vectors (from text, images, etc.) and performing fast searches for vectors (documents, images) that have high similarity.
+	•	Key Features
+	1.	Vector Insertion
+	•	Converts text/images to vectors using a pretrained model (e.g., SentenceTransformer, BERT, etc.) and stores them.
+	2.	Similarity Search (ANN Search)
+	•	Utilizes Approximate Nearest Neighbor Search techniques to efficiently find the most similar vectors (documents) among a large vector set.
+	3.	Scalability
+	•	Maintains fast search speed even for very large datasets through scaling and distributed processing.
+	•	Representative Vector DB examples
+	•	FAISS: A vector similarity search library developed by Meta (formerly Facebook).
+	•	Chroma: A vector DB that can easily scale from personal projects to enterprise services.
+	•	Milvus: A high-performance, large-scale vector search engine.
+	•	Pinecone: A fully managed cloud-based vector DB service.
+
+Use Cases
+	•	RAG (Retrieval-Augmented Generation) for document search
+	•	Similarity-based recommendation systems
+	•	Multi-modal search for images, audio, etc.
+
+⸻
+
+6. LLM Finetuning
+
+LLM Finetuning is the process of additional training a pretrained large language model (e.g., GPT, BERT, etc.) to customize it for a specific task or domain.
+	•	You can significantly improve the model’s performance on specific data while reusing existing parameters.
+
+6.1 Finetuning Methods
+	1.	Full Finetuning
+	•	Updating all model parameters, usually through epoch-based optimization.
+	•	Used when you have plenty of data and computational resources.
+	2.	PEFT (LoRA, Prefix Tuning, etc.)
+	•	Approaches that update only part of the parameters or that enable low-cost additional training.
+	•	LoRA (Low-Rank Adaptation): Trains certain weight matrices in the model in a low-rank form to achieve finetuning effects with less memory usage.
+	•	Prefix Tuning: Adds a virtual prompt (prefix) before the input tokens, guiding model performance improvement without major changes to the main model.
+	3.	Training Tools
+	•	Hugging Face Transformers library’s Trainer API
+	•	Deepspeed, Accelerate for distributed training and memory optimization
+	•	PEFT library: Apply LoRA and various other techniques easily
+
+6.2 Considerations
+	•	Data Quality: The domain suitability and label quality of the finetuning data are very important.
+	•	Avoid Overfitting: Simply increasing the learning rate or the number of epochs may cause the model’s generative ability to degrade or lead to model bias.
+	•	Model Compatibility: Some models have architectural constraints that limit finetuning, so you should consult official documentation or community resources.
+
+⸻
+
+By combining LangChain, RAG, Vector DB, and LLM Finetuning, you can:
+	1.	Easily build an LLM-based pipeline,
+	2.	Strengthen the model’s responses with accurate and rich knowledge, and
+	3.	Create a custom LLM optimized for a specific domain or work environment.
+
+In practical or research settings where LLMs are utilized:
+	•	Use LangChain to structure your workflow,
+	•	Enhance it with RAG for real-time knowledge retrieval,
+	•	Maximize search performance with a Vector DB,
+	•	And LLM Finetuning to adapt the model to domain-specific needs.
+
+This will enable you to build more efficient and powerful NLP solutions.
+
+⸻
+
+Notebook Demonstration
+
+In this notebook, we will explore the following simple example code to see how to use a local environment:
+	1.	Load a local Llama model (or similar) and perform simple inference
+	2.	Use LangChain + Vector DB to demonstrate RAG
+	3.	(Simple version) LLM Finetuning example
+
+pip install -r requirements.txt
+
+Run this in your terminal to set up the environment.
+
+Example: Loading a local LLM
+Below is an example of downloading the Llama3.1-8b model from the Hugging Face model repository to your local machine and performing a simple inference.
+
+On Apple Silicon (M1, M4, etc.), mps (Metal Performance Shaders) device support may be set automatically or require manual configuration.
+
+⸻
+
+Tokens and Tokenizer
+
+In Natural Language Processing (NLP), tokenization is a very important preprocessing step that breaks text into specific units. The tool or library used in this process is the tokenizer. Let’s learn about this in more detail.
+	1.	What is a Token?
+
+A token is a small semantic unit obtained by splitting text (sentences, paragraphs, etc.). The way you split can vary, producing different types of token units.
+
+1.1 Word-level
+	•	A simple method that splits based on whitespace or punctuation.
+	•	Example: “나는 학교에 간다.” → [“나는”, “학교에”, “간다.”]
+
+1.2 Morpheme-level (used in Korean)
+	•	Often used for Korean.
+	•	Example: “나는 학교에 간다.” → [“나”, “는”, “학교”, “에”, “가”, “ᄂ다”, “.”]
+
+1.3 Subword-level
+	•	Uses algorithms like BPE, WordPiece, SentencePiece to split into smaller-than-word units.
+	•	Example: “unhappy” → [“un”, “happy”]
+	•	Example: “unbelievable” → [“un”, “believable”]
+
+	2.	What is a Tokenizer?
+
+A tokenizer is a tool (or library) that splits text into tokens according to certain rules or algorithms.
+
+2.1 Rule-based Tokenizer
+	•	Splits using predefined rules such as whitespace, punctuation, or patterns (regex).
+	•	Example: split(), simple regex-based splitting.
+
+2.2 Trained Tokenizer
+	•	Automatically creates a token vocabulary by training on a corpus of data, learning the rules.
+	•	BPE (Byte-Pair Encoding), WordPiece, SentencePiece are representative examples.
+	•	Also used in large language models (e.g., BERT, GPT).
+
+	3.	Why is Tokenization Important?
+	4.	Improved Accuracy
+	•	Splitting text into correct units increases the accuracy of subsequent tasks like morphological analysis or POS tagging.
+	5.	Vocabulary Management
+	•	If you only split by words, your vocabulary can become huge, but with subword methods, you can handle rare words and neologisms efficiently.
+	6.	Maximize Model Performance
+	•	Poor tokenization can make it difficult to train the model or degrade performance at inference time.
+	•	Models like BERT or GPT are trained on consistent tokenization rules.
+	7.	Considerations for Korean Tokenization
+	8.	The need for morphological analysis
+	•	Korean has various postpositions and endings, making it difficult to tokenize by whitespace alone.
+	9.	Various elements within a word
+	•	“학교에” → [“학교”, “에”]
+	•	“학교에서” → [“학교”, “에서”]
+	•	Must split postpositions, endings, etc. to get the desired accuracy.
+	10.	Irregular spacing
+	•	Because spacing is often not strictly followed, purely rule-based approaches have limitations.
+	11.	Representative Tokenizers
+
+	•	NLTK (English)
+	•	One of the most widely used NLP libraries in Python
+	•	Provides word tokenization, sentence tokenization, stopword removal, etc.
+	•	KoNLPy (Korean)
+	•	Integrates multiple morphological analyzers (Twitter, Kkma, Hannanum, etc.)
+	•	Specialized for Korean, offering morphological analysis, POS tagging, etc.
+	•	BPE, SentencePiece, WordPiece
+	•	Subword-based tokenizers
+	•	Used in large language models such as BERT, GPT, RoBERTa, etc.
+
+	6.	Summary
+
+	•	Token
+	•	The result of splitting text into small units (words, morphemes, subwords, etc.)
+	•	Tokenizer
+	•	A tool or algorithm for splitting text according to a specified criterion
+	•	Tokenization
+	•	A core preprocessing step in NLP. Good tokenization can significantly improve model performance and manage vocabulary effectively.
+	•	For Korean, morphological analysis or subword-based methods are commonly used.
+
+In conclusion, proper tokenization can greatly improve data quality and model performance. It is important to choose a tokenizer suited to your NLP project and devise a tokenization strategy that reflects the linguistic characteristics of each language.
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# Example for a Llama model (In practice, you may need permission or a different model name in Hugging Face.)
+# model_name = "meta-llama/Llama-3.1-8B"
+model_name="../models/Llama-3.1-8b"  
+# Check if the mps device is available
+device = torch.device("mps") if torch.backends.mps.is_available() else torch.device("cpu")
+print("Using device:", device)
+
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16, device_map={"": device})
+
+# Simple text generation example
+prompt = "Hello, how are you?"
+inputs = tokenizer(prompt, return_tensors="pt").to(device)
+with torch.no_grad():
+    outputs = model.generate(**inputs, max_new_tokens=50)
+generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print("Generated text:")
+print(generated_text)
+
+Using device: mps
+...
+Generated text:
+Hello, how are you? Today we are going to talk about the new generation...
+
+Explanation:
+	•	torch_dtype=torch.float16: float16 is optimal on Apple MPS.
+	•	device_map={"": device}: Automatically places the model on MPS (GPU) or CPU.
+	•	max_new_tokens=50: Limits response to 50 tokens.
+
+Llama 3.1 8B + LangChain + Vector DB (RAG)
+
+You can also integrate the Llama 3.1 8B model with LangChain and ChromaDB (a Vector DB) to perform Retrieval-Augmented Generation (RAG).
+
+2.1 Install LangChain & ChromaDB
+
+pip install langchain chromadb faiss-cpu sentence-transformers
+
+2.2 RAG Code Example
+
+# Required library imports
+from transformers import pipeline  # <-- added here
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain.docstore.document import Document
+from langchain.chains import RetrievalQA
+from langchain.llms import HuggingFacePipeline
+
+# 1) Load embedding model
+embedding_model = "sentence-transformers/all-MiniLM-L6-v2"
+embeddings = HuggingFaceEmbeddings(model_name=embedding_model)
+
+# Sample documents
+texts = [
+    "LangChain is a framework for chaining LLMs.",
+    "RAG stands for Retrieval-Augmented Generation.",
+    "A Vector DB is a database for searching document embedding vectors."
+]
+documents = [Document(page_content=t) for t in texts]
+
+# 2) Initialize a Chroma VectorStore
+vectorstore = Chroma.from_documents(documents, embedding=embeddings, collection_name="example_collection")
+
+# 3) Connect Llama 3.1 8B model to LangChain
+generator_pipeline = pipeline(
+    "text-generation",
+    model=model,  # Llama 3.1 8B model
+    tokenizer=tokenizer
+)
+llm = HuggingFacePipeline(pipeline=generator_pipeline)
+
+# 4) Create a RetrievalQA chain
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    chain_type="stuff",
+    retriever=vectorstore.as_retriever()
+)
+
+# 5) Ask a question and generate RAG-based answer
+query = "What is RAG?"
+answer = qa_chain.run(query)
+print(f"Q: {query}\nA: {answer}")
+
+Output:
+
+Q: What is RAG?
+A: Retrieval-Augmented Generation...
+
+
+
+⸻
+
+What is an Embedding Model?
+
+1) Concept
+
+An Embedding Model is a model that converts data into fixed-size vectors.
+It transforms various types of data (text, images, audio, etc.) into numerical vectors so that computers can understand and process them.
+
+In other words, embedding is the process of converting high-dimensional data (words, sentences, documents, images, etc.) into dense vectors, and the model that generates these vectors is called an Embedding Model.
+
+⸻
+
+2) Why are embeddings needed?
+
+Because computers can only understand numbers, they cannot directly process natural language (NLP) or images.
+Hence, Embedding Models are needed for the following reasons:
+	•	Convert strings to numbers: Text must be converted into numerical vectors for machine learning models to understand.
+	•	Similar data have similar vector values: Words with similar meanings end up with similar vector representations.
+	•	Compress high-dimensional data into lower dimensions: Embeddings help reduce the dimensionality for more optimized computations.
+
+For example, “cat” and “dog” are similar in meaning, so their embedding vectors are close to each other in the vector space.
+Meanwhile, “cat” and “car” have little connection, so they lie far apart in the vector space.
+
+⸻
+
+3) Types of Embedding Models
+
+Embedding Models are used to vectorize text, images, audio, etc. Here are some representative types:
+
+(1) Text Embeddings (Word/Sentence Embeddings)
+	•	Models that convert words, sentences, or documents into vectors for NLP
+	•	Uses: Chatbots, search, recommendation systems, document classification, RAG
+
+Representative Models:
+	•	Word2Vec: A leading model for word vectorization
+	•	GloVe: Vectors that reflect statistical co-occurrence of words
+	•	FastText: An improvement on Word2Vec (can embed subwords)
+	•	BERT Embedding: A powerful model that considers context when creating vectors
+	•	Sentence-BERT (SBERT): A model that creates embeddings at the sentence level
+	•	sentence-transformers/all-MiniLM-L6-v2: A lightweight, fast sentence embedding model (often used with LangChain, RAG)
+
+Example (using sentence-transformers to generate text embedding vectors):
+
+from sentence_transformers import SentenceTransformer
+
+# Load an SBERT-based sentence embedding model
+model = SentenceTransformer("all-MiniLM-L6-v2")
+
+# Example sentences
+sentences = ["Cats are cute.", "Dogs are loyal.", "Cars are fast."]
+
+# Convert to embeddings (vectors)
+embeddings = model.encode(sentences)
+
+# Print the vector for the first sentence
+print(embeddings[0])
+
+
+
+⸻
+
+(2) Image Embeddings
+	•	Convert image data into vectors for tasks like image similarity search, object recognition, etc.
+	•	Uses: Image retrieval systems, style recommendations, computer vision
+
+Representative Models:
+	•	ResNet-50, EfficientNet, CLIP: For image classification and feature extraction
+	•	DINOv2: An image embedding model recently introduced by Meta
+	•	OpenAI CLIP: Maps text and images into the same vector space (e.g. “dog photo” → close to dog-image vectors)
+
+Example (using CLIP to generate image embedding vectors):
+
+import torch
+import clip
+from PIL import Image
+
+# Load CLIP model
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model, preprocess = clip.load("ViT-B/32", device=device)
+
+# Load and transform the image
+image = preprocess(Image.open("dog.jpg")).unsqueeze(0).to(device)
+
+# Extract embedding vectors
+with torch.no_grad():
+    image_features = model.encode_image(image)
+
+print(image_features.shape)  # e.g., [1, 512]
+
+
+
+⸻
+
+(3) Audio Embeddings
+	•	Convert audio data into vectors for tasks like speech recognition, emotion analysis, etc.
+	•	Uses: Speech-to-text, emotion analysis, noise filtering, music recommendation systems
+
+Representative Models:
+	•	MFCC (Mel-Frequency Cepstral Coefficients): A method to extract feature vectors from audio signals
+	•	wav2vec 2.0 (by Facebook): Converts audio to vectors and can transcribe text
+	•	Whisper (by OpenAI): A multi-language speech recognition and embedding model
+
+Example (using librosa to generate audio embedding vectors):
+
+import librosa
+
+# Load an audio file
+y, sr = librosa.load("speech.wav")
+
+# Extract MFCC feature vectors
+mfccs = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+
+# Print the MFCC vector for the first frame
+print(mfccs[:, 0])
+
+
+
+⸻
+
+4) Applications of Embedding Vectors
+
+Using embedding models, you can achieve strong performance in tasks such as document search, chatbots, recommendation systems, and RAG models.
+	•	Document Retrieval System
+	•	Convert user queries into vectors and search for the most similar documents.
+	•	Example: LangChain + ChromaDB for RAG (Retrieval-Augmented Generation)
+	•	Chatbots and LLM Applications
+	•	During chatbot response generation, utilize embedding-based searches.
+	•	Example: Convert user input into embeddings and retrieve the most relevant answers from a DB.
+	•	Recommendation Systems
+	•	Platforms like Netflix or Spotify use embedding vectors for user preference and content.
+	•	Example: Embedding vectors for movies/music the user has consumed, then recommend similar content.
+	•	Healthcare and Bioinformatics
+	•	Vectorize gene data, medical publications, protein structures, etc. for analysis.
+	•	Example: Drug discovery, genome analysis
+
+⸻
+
+5) Conclusion
+
+Embedding models convert text, images, audio into vector representations, enabling similarity search, chatbots, recommendation systems, and more.
+Transformer-based embedding models (e.g., BERT, CLIP, wav2vec 2.0, etc.) are becoming more sophisticated, enabling richer semantic representations.
+
+🚀 By combining LangChain + Vector DB (Chroma, FAISS) + LLM (RAG), you can build even more powerful AI applications!
+
+⸻
+
+3) Llama 3.1 8B Model Finetuning (LoRA Application)
+
+To finetune the Llama 3.1 8B model using LoRA (Low-Rank Adaptation), you can use PEFT (Parameter-Efficient Fine-Tuning).
+
+3.1 Install LoRA
+
+pip install peft bitsandbytes datasets
+
+3.2 LoRA Code Example
+
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, TrainingArguments, Trainer
+from peft import LoraConfig, get_peft_model
+from datasets import Dataset
+
+# Load model and tokenizer
+model_name = "../models/Llama-3.1-8b"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+tokenizer.pad_token = tokenizer.eos_token
+
+device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+print(f"Using device: {device}")
+
+# Load the model
+model = AutoModelForCausalLM.from_pretrained(
+    model_name,
+    torch_dtype=torch.bfloat16,  # ✅ using bfloat16 instead of float16
+    device_map="auto"
+).to(device)  # explicitly move model to device
+
+# LoRA Configuration
+lora_config = LoraConfig(
+    r=16,
+    lora_alpha=32,
+    lora_dropout=0.1,
+    bias="none",
+    target_modules=["q_proj", "v_proj"]  # Adjust core weights of Llama
+)
+
+# Apply LoRA to the model
+lora_model = get_peft_model(model, lora_config)
+
+# ✅ Prepare input data
+train_texts = [
+    "Question: What is the Llama model?\nAnswer: It is a large language model by Meta.",
+    "Question: What is RAG?\nAnswer: It is a retrieval-based generation model."
+]
+
+# ✅ Modified tokenization function
+def tokenize_fn(text):
+    tokenized = tokenizer(text, truncation=True, padding="max_length", max_length=64)
+    return {
+        "input_ids": tokenized["input_ids"],
+        "attention_mask": tokenized["attention_mask"],
+        "labels": tokenized["input_ids"]  # GPT-style models use labels = input_ids
+    }
+
+# ✅ Convert to Hugging Face Dataset
+train_dataset = Dataset.from_dict({"text": train_texts})
+train_dataset = train_dataset.map(lambda x: tokenize_fn(x["text"]), batched=True, remove_columns=["text"])
+
+# ✅ TrainingArguments (disable removal of unused columns)
+training_args = TrainingArguments(
+    output_dir="finetuned-llama3",
+    per_device_train_batch_size=1,
+    num_train_epochs=1,
+    save_steps=10,
+    logging_steps=5,
+    remove_unused_columns=False,  # <--- Important
+)
+
+# ✅ Trainer setup
+trainer = Trainer(
+    model=lora_model,
+    args=training_args,
+    train_dataset=train_dataset,
+)
+
+# ✅ Start training
+trainer.train()
+
+# ✅ Save the trained model
+trainer.save_model("finetuned-llama3")
+
+# Save the LoRA adapter checkpoint
+lora_model.save_pretrained("finetuned-llama3")
+# Optionally save the tokenizer too
+tokenizer.save_pretrained("finetuned-llama3")
+print("Adapter and tokenizer saved successfully!")
+
+print("Finetuning Complete!")
+
+Using device: mps
+...
+Finetuning Complete!
+
+Why LoRA?
+	•	Typical training for Llama 3.1 8B might require over 100GB of RAM.
+	•	By adjusting only certain weights (Q, V projections) using LoRA, you can reduce memory usage.
+	•	Can run even on an M4 Pro with 64GB RAM.
+
+4) Summary
+	•	Llama 3.1 8B model usage
+	1.	Use Hugging Face Transformers
+	•	Use mps (Apple Metal)
+	•	Use float16 for memory optimization
+	•	Integrate with LangChain + Vector DB (RAG)
+	2.	Use ChromaDB to store documents
+	•	Build retrieval-answer systems with LangChain
+	•	Finetune Llama 3.1 8B (LoRA)
+	3.	Apply PEFT (LoRA) for lightweight training
+	•	Possible on Apple Silicon
+
+How to Use the Trained Model
+
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from peft import PeftModel
+
+# Load the base model from its original checkpoint
+base_model_name = "../models/Llama-3.1-8b"
+base_model = AutoModelForCausalLM.from_pretrained(base_model_name)
+
+# Now load the adapter from your local directory
+model = PeftModel.from_pretrained(base_model, "finetuned-llama3", local_files_only=True)
+
+# Load the tokenizer (either from your adapter folder or the base model)
+tokenizer = AutoTokenizer.from_pretrained("finetuned-llama3")
+
+prompt = "Question: What is the Llama model?\nAnswer:"
+inputs = tokenizer(prompt, return_tensors="pt")
+
+with torch.no_grad():
+    outputs = model.generate(**inputs, max_new_tokens=50)
+
+generated_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+print("Generated Response:")
+print(generated_text)
+
+Setting `pad_token_id` to `eos_token_id`:128001 for open-end generation.
+Generated Response:
+Question: What is the Llama model?
+Answer: B
+
+It seems the model did not learn well—likely because the training dataset was very small. If you increase the dataset size, results will likely improve.
+
+For example, you could try a Korean food dataset from:
+https://huggingface.co/datasets/SGTCho/korean_food
+
+And follow the steps here:
+https://github.com/SGT-Cho/LLM/tree/main/Finetuning
+
+⸻
+
+
 # LLM, Llama, Deepseek R1, LangChain, RAG, Vector DB, LLM Finetuning
 
 본 노트북은 **로컬 환경에서 LLM(Local Large Language Model)을 활용하여 실험**하는 방법을 데모하기 위해 작성되었습니다.  
